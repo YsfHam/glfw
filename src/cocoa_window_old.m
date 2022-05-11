@@ -931,31 +931,13 @@ int _glfwCreateWindowCocoa(_GLFWwindow* window,
             if (!_glfwCreateContextOSMesa(window, ctxconfig, fbconfig))
                 return GLFW_FALSE;
         }
-
-        if (!_glfwRefreshContextAttribs(window, ctxconfig))
-            return GLFW_FALSE;
     }
-
-    if (wndconfig->mousePassthrough)
-        _glfwSetWindowMousePassthroughCocoa(window, GLFW_TRUE);
 
     if (window->monitor)
     {
         _glfwShowWindowCocoa(window);
         _glfwFocusWindowCocoa(window);
         acquireMonitor(window);
-
-        if (wndconfig->centerCursor)
-            _glfwCenterCursorInContentArea(window);
-    }
-    else
-    {
-        if (wndconfig->visible)
-        {
-            _glfwShowWindowCocoa(window);
-            if (wndconfig->focused)
-                _glfwFocusWindowCocoa(window);
-        }
     }
 
     return GLFW_TRUE;
@@ -1377,7 +1359,14 @@ void _glfwSetWindowDecoratedCocoa(_GLFWwindow* window, GLFWbool enabled)
     } // autoreleasepool
 }
 
-void _glfwSetWindowFloatingCocoa(_GLFWwindow* window, GLFWbool enabled)
+void _glfwPlatformSetWindowTitlebar(_GLFWwindow* window, GLFWbool enabled)
+{
+    // TODO
+    _glfwInputError(GLFW_PLATFORM_ERROR,
+        "Cocoa: Window attribute setting not implemented yet");
+}
+
+void _glfwPlatformSetWindowFloating(_GLFWwindow* window, GLFWbool enabled)
 {
     @autoreleasepool {
     if (enabled)
